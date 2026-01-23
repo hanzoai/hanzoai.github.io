@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hanzo AI - Open Source</title>
+  <meta name="description" content="Open source projects from Hanzo AI - AI Cloud and DX Platform">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand: #fd4444;
+      --brand-secondary: #ff6b6b;
+      --brand-hover: #e03e3e;
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #141414;
+      --bg-card: rgba(23, 23, 23, 0.5);
+      --border: #262626;
+      --text-primary: #fafafa;
+      --text-secondary: #a3a3a3;
+      --text-muted: #737373;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .hero {
+      position: relative;
+      padding: 80px 24px 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, var(--brand) 0%, transparent 70%);
+      opacity: 0.08;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; max-width: 800px; margin: 0 auto; }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-secondary) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 700;
+      color: white;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    h1 span { color: var(--text-secondary); }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--brand); }
+
+    .stats {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 24px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--text-muted);
+      transform: translateY(-2px);
+    }
+
+    .project-card.featured {
+      border-color: var(--brand);
+      background: linear-gradient(135deg, rgba(253, 68, 68, 0.05) 0%, transparent 100%);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .project-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .project-badge {
+      padding: 4px 8px;
+      background: var(--brand);
+      color: white;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .project-desc {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .project-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .doc-sites {
+      margin-top: 48px;
+    }
+
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 12px;
+    }
+
+    .doc-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+
+    .doc-link:hover {
+      border-color: var(--text-muted);
+    }
+
+    .doc-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .doc-info h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .doc-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .repos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .repo-card {
+      display: block;
+      padding: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+    }
+
+    .repo-card:hover {
+      border-color: var(--text-muted);
+    }
+
+    .repo-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--brand);
+      margin-bottom: 4px;
+    }
+
+    .repo-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .repo-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--brand);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--text-muted);
+      font-size: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--brand); }
+
+    @media (max-width: 640px) {
+      .hero { padding: 60px 16px 40px; }
+      .stats { gap: 24px; }
+      .stat-value { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-content">
+      <div class="logo">H</div>
+      <h1>Hanzo AI <span>Open Source</span></h1>
+      <p class="subtitle">AI Cloud and DX Platform - Building the future of AI development</p>
+      <nav class="nav-links">
+        <a href="https://hanzo.ai" class="nav-link">Website</a>
+        <a href="https://docs.hanzo.ai" class="nav-link">Documentation</a>
+        <a href="https://github.com/hanzoai" class="nav-link">GitHub</a>
+        <a href="https://discord.gg/hanzo" class="nav-link">Discord</a>
+      </nav>
+      <div class="stats" id="stats">
+        <div class="stat">
+          <div class="stat-value" id="repo-count">--</div>
+          <div class="stat-label">Repositories</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="star-count">--</div>
+          <div class="stat-label">Stars</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value" id="fork-count">--</div>
+          <div class="stat-label">Forks</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="featured">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="featured-grid" id="featured-projects">
+        <a href="https://github.com/hanzoai/mcp" class="project-card featured">
+          <div class="project-header">
+            <span class="project-name">hanzo-mcp</span>
+            <span class="project-badge">MCP</span>
+          </div>
+          <p class="project-desc">Model Context Protocol - 260+ tools for AI models</p>
+          <div class="project-meta">
+            <span>TypeScript</span>
+          </div>
+        </a>
+        <a href="https://github.com/hanzoai/llm" class="project-card featured">
+          <div class="project-header">
+            <span class="project-name">llm</span>
+            <span class="project-badge">Gateway</span>
+          </div>
+          <p class="project-desc">Unified LLM Gateway - Proxy for 100+ AI providers</p>
+          <div class="project-meta">
+            <span>Python</span>
+          </div>
+        </a>
+        <a href="https://github.com/hanzoai/agent" class="project-card featured">
+          <div class="project-header">
+            <span class="project-name">agent</span>
+            <span class="project-badge">SDK</span>
+          </div>
+          <p class="project-desc">Multi-agent SDK with OpenAI compatibility</p>
+          <div class="project-meta">
+            <span>Python</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="doc-sites">
+      <h2 class="section-title">Documentation Sites</h2>
+      <div class="doc-grid">
+        <a href="https://hanzoai.github.io/hanzo.vim" class="doc-link">
+          <div class="doc-icon">📝</div>
+          <div class="doc-info">
+            <h3>hanzo.vim</h3>
+            <p>Vim/Neovim plugin</p>
+          </div>
+        </a>
+        <a href="https://hanzoai.github.io/hanzo.el" class="doc-link">
+          <div class="doc-icon">🔮</div>
+          <div class="doc-info">
+            <h3>hanzo.el</h3>
+            <p>Emacs package</p>
+          </div>
+        </a>
+        <a href="https://hanzoai.github.io/ide-extension" class="doc-link">
+          <div class="doc-icon">💻</div>
+          <div class="doc-info">
+            <h3>IDE Extensions</h3>
+            <p>VS Code & JetBrains</p>
+          </div>
+        </a>
+        <a href="https://hanzoai.github.io/browser-extension" class="doc-link">
+          <div class="doc-icon">🌐</div>
+          <div class="doc-info">
+            <h3>Browser Extension</h3>
+            <p>Chrome, Firefox, Safari</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section style="margin-top: 48px;">
+      <h2 class="section-title">All Repositories</h2>
+      <div class="repos-grid" id="repos-list">
+        <div class="loading">
+          <div class="spinner"></div>
+          <p>Loading repositories...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <a href="https://hanzo.ai">Hanzo AI</a> ·
+      <a href="https://github.com/hanzoai">GitHub</a> ·
+      Techstars '17
+    </p>
+  </footer>
+
+  <script>
+    const ORG = 'hanzoai';
+    const API = `https://api.github.com/orgs/${ORG}/repos?per_page=100&sort=updated`;
+
+    async function fetchRepos() {
+      try {
+        const response = await fetch(API);
+        const repos = await response.json();
+
+        if (!Array.isArray(repos)) {
+          throw new Error('Invalid response');
+        }
+
+        // Calculate stats
+        const totalStars = repos.reduce((sum, r) => sum + (r.stargazers_count || 0), 0);
+        const totalForks = repos.reduce((sum, r) => sum + (r.forks_count || 0), 0);
+
+        document.getElementById('repo-count').textContent = repos.length;
+        document.getElementById('star-count').textContent = totalStars > 1000 ? (totalStars / 1000).toFixed(1) + 'k' : totalStars;
+        document.getElementById('fork-count').textContent = totalForks > 1000 ? (totalForks / 1000).toFixed(1) + 'k' : totalForks;
+
+        // Filter and sort repos
+        const publicRepos = repos
+          .filter(r => !r.fork && !r.archived)
+          .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
+
+        // Render repos
+        const container = document.getElementById('repos-list');
+        container.innerHTML = publicRepos.map(repo => `
+          <a href="${repo.html_url}" class="repo-card" target="_blank">
+            <div class="repo-name">${repo.name}</div>
+            <p class="repo-desc">${repo.description || 'No description'}</p>
+            <div class="repo-meta">
+              ${repo.language ? `<span>${repo.language}</span>` : ''}
+              <span>⭐ ${repo.stargazers_count || 0}</span>
+              <span>🍴 ${repo.forks_count || 0}</span>
+            </div>
+          </a>
+        `).join('');
+
+      } catch (error) {
+        console.error('Failed to fetch repos:', error);
+        document.getElementById('repos-list').innerHTML = `
+          <p style="color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 24px;">
+            Failed to load repositories. <a href="https://github.com/hanzoai" style="color: var(--brand);">View on GitHub</a>
+          </p>
+        `;
+      }
+    }
+
+    fetchRepos();
+  </script>
+</body>
+</html>
